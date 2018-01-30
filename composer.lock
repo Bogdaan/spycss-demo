@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "/home/bogdan/projects/spycss",
-                "reference": "4806498ddc52851951dd10da1c760393861d422d"
+                "reference": "2b65e3f6b73815d2466e1957a6b8c52d7e001480"
             },
             "require": {
                 "php": ">=5.5.0"
@@ -42,7 +42,7 @@
                 "spy",
                 "tracking"
             ],
-            "time": "2018-01-25T13:21:16+00:00"
+            "time": "2018-01-30T17:57:33+00:00"
         },
         {
             "name": "monolog/monolog",

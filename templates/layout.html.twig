@@ -8,27 +8,45 @@
     <title>{% block title '' %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{{ url('homepage') }}">SpyCss</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{{ url('demo') }}">Demo</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url('events') }}">Tracked events</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://github.com/Bogdaan/spycss">Github</a>
-            </li>
-        </ul>
-        <span class="navbar-text"></span>
+
+  <div class="text-center cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h1 class="masthead-brand"><a href="{{ url('home') }}">SpyCss</a></h1>
+        <nav class="nav nav-masthead justify-content-center">
+            {% set nav_list = [
+              ["home",    "About"],
+              ["events",  "Events"]
+            ] %}
+
+            {% set link_active = global.request.get('_route') %}
+
+            {% for link in nav_list %}
+              <a href="{{ url(link[0]) }}" class="nav-link {% if link[0] == link_active %} active {% endif %}">{{ link[1] }}</a>
+            {% endfor %}
+            <a href="https://github.com/Bogdaan/spycss" class="nav-link">Github</a>
+        </nav>
       </div>
-    </nav>
+    </header>
 
     {% block content %}{% endblock %}
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+          <ul class="nav justify-content-center">
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/Bogdaan/spycss">SpyCss sources</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/Bogdaan/spycss-demo">Demo sources</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://hcbogdan.com">Blog</a>
+              </li>
+          </ul>
+      </div>
+    </footer>
+  </div>
+
   </body>
 </html>

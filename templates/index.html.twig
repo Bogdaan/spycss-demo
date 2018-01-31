@@ -1,9 +1,25 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-  <div class="py-5 text-center">
-    <h2>Checkout form</h2>
-    <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
-  </div>
+<main role="main" class="inner cover">
+    <p class="lead">SpyCss is a library that helps to analyze user behavior via CSS, without JavaScript on client side.</p>
 
+    {% for chunk in chunks %}
+    <div class="row text-left">
+      {% for card in chunk %}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ card.title }}</h5>
+            <div class="card-text">{{ card.data|raw }}</div>
+            <a href="{{ url('events') }}" class="btn btn-primary">See results</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+</main>
+<style>{{ css|raw }}</style>
 {% endblock %}

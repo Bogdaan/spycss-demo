@@ -5,19 +5,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use SpyCss\SpyCss;
 
 $spyCssBackendUrl = '/w';
 // Request::setTrustedProxies(array('127.0.0.1'));
 
-$app->get('/', function () use ($app) {
-    return $app['twig']->render('index.html.twig');
-})
-->bind('homepage');
-
 // show elements
-$app->get('/demo', function () use ($app, $spyCssBackendUrl) {
+$app->get('/', function () use ($app, $spyCssBackendUrl) {
     if (null === $uid = $app['session']->get('uid')) {
         $uid = uniqid('u');
         $app['session']->set('uid', $uid);
@@ -27,59 +21,128 @@ $app->get('/demo', function () use ($app, $spyCssBackendUrl) {
 
     $elemets = [
         [
-            'title' => 'Analyze ',
-            'dsc' => 'Try to hover on links',
+            'title' => 'Try to hover on links below',
             'data' => (
-                $spyCss->builder()
-                ->tag('a')
-                ->content('hcbogdan.com')
-                ->attribute('href', 'https://hcbogdan.com')
-                ->interactions([
-                    new \SpyCss\Interaction\Hover('hcbogdan'),
-                ])
-                ->get()
-                .
-                $spyCss->builder()
-                ->tag('a')
-                ->content('hcbogdan.com')
-                ->attribute('href', 'https://www.google.com')
-                ->interactions([
-                    new \SpyCss\Interaction\Hover('google'),
-                ])
-                ->get()
+                '<ul>'
+                .'<li>'
+                .$spyCss->builder()
+                    ->tag('a')
+                    ->content('hcbogdan.com')
+                    ->attribute('href', 'https://hcbogdan.com')
+                    ->interactions([
+                        new \SpyCss\Interaction\Hover('hover-hcbogdan.com'),
+                    ])
+                    ->get()
+                .'</li>'
+                .'<li>'
+                .$spyCss->builder()
+                    ->tag('a')
+                    ->content('google.com')
+                    ->attribute('href', 'https://www.google.com')
+                    ->interactions([
+                        new \SpyCss\Interaction\Hover('hover-google.com'),
+                    ])
+                    ->get()
+                .'</li>'
+                .'</ul>'
             ),
         ],
         [
-            'title' => 'Analyze how long user hover on DOM-element',
-            'dsc' => 'Try to hover on element for long time',
+            'title' => 'Try to click on links',
             'data' => (
-                $spyCss->builder()
-                ->tag('div')
-                ->content('<div class="jumbotron">
-  <h1 class="display-4">Hello, world!</h1>
-  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-  <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-  </p>
-</div>'
-                )
-                ->attribute('href', 'https://hcbogdan.com')
-                ->interactions([
-                    new \SpyCss\Interaction\Online('jumbotron-online'),
-                ])
-                ->get()
+                '<ul>'
+                .'<li>'
+                .$spyCss->builder()
+                    ->tag('a')
+                    ->content('github.com')
+                    ->attributes([
+                        'href' => 'https://github.com',
+                        'target' => '_blank'
+                    ])
+                    ->interactions([
+                        new \SpyCss\Interaction\Active('click-github.com'),
+                    ])
+                    ->get()
+                .'</li>'
+                .'<li>'
+                .$spyCss->builder()
+                    ->tag('a')
+                    ->content('medium.com')
+                    ->attributes([
+                        'href' => 'https://medium.com',
+                        'target' => '_blank'
+                    ])
+                    ->interactions([
+                        new \SpyCss\Interaction\Active('click-medium.com'),
+                    ])
+                    ->get()
+                .'</li>'
+                .'</ul>'
             ),
-        ]
+        ],
+        [
+            'title' => 'Track, how long you hover on link',
+            'data' => (
+                '<ul>'
+                .'<li>'
+                .$spyCss->builder()
+                    ->tag('a')
+                    ->content('hcbogdan.com')
+                    ->attributes([
+                        'href' => 'https://hcbogdan.com',
+                        'target' => '_blank'
+                    ])
+                    ->interactions([
+                        new \SpyCss\Interaction\Online('view-on-hcbogdan.com'),
+                    ])
+                    ->get()
+                .'</li>'
+                .'<li>'
+                .$spyCss->builder()
+                    ->tag('a')
+                    ->content('google.com')
+                    ->attributes([
+                        'href' => 'https://google.com',
+                        'target' => '_blank'
+                    ])
+                    ->interactions([
+                        new \SpyCss\Interaction\Online('view-on-google.com'),
+                    ])
+                    ->get()
+                .'</li>'
+                .'</ul>'
+            ),
+        ],
+        [
+            'title' => 'Fill <input> and see results',
+            'data' => (
+                '<form>'
+                .'<div class="form-group">'
+                .$spyCss->builder()
+                    ->tag('input')
+                    ->attributes([
+                        'class' => 'form-control',
+                        'name' => 'you_name',
+                        'value' => '',
+                        'required' => true,
+                        'placeholder' => 'Write some text',
+                    ])
+                    ->interactions([
+                        new \SpyCss\Interaction\Valid('you-fill-input'),
+                    ])
+                    ->get()
+                .'</div>'
+                .'</form>'
+            ),
+        ],
     ];
 
-    return $app['twig']->render('demo.html.twig', [
-        'list' => $elemets,
-        'styles' => $spyCss->extractCss()
+    return $app['twig']->render('index.html.twig', [
+        'chunks' => array_chunk($elemets, 2),
+        'css' => $spyCss->extractCss()
     ]);
 })
-->bind('demo');
+->bind('home');
 
 // show all events
 $app->get('/events', function () use ($app) {
@@ -93,27 +156,38 @@ $app->get('/events', function () use ($app) {
     }
 
     return $app['twig']->render('events.html.twig', [
-        'list' => $events
+        'events' => $events
     ]);
 })
 ->bind('events');
 
+// clear event list
+$app->get('/remove_events', function () use ($app) {
+    $app['session']->set('events', []);
+    return $app->redirect('events');
+})
+->bind('remove_events');
+
 // backend api
-$app->get($spyCssBackendUrl.'/<userId>/<actionId>/<payload>', function ($userId, $actionId, $payload) use ($app) {
+$app->get($spyCssBackendUrl.'/{userId}/{actionId}/{payload}', function ($userId, $actionId, $payload) use ($app) {
     $events = $app['session']->get('events');
     if ($events === null) {
         $events = [];
     } else {
         $events = array_slice($events, -10);
     }
-    $events[] = [ $actionId, $payload ];
+    $events[] = [date(DateTime::W3C), $actionId, $payload ];
     $app['session']->set('events', $events);
-    return new Response('', 200);
+    return new Response('', 200, [
+        'Cache-Control' => 'no-cache, no-store, must-revalidate',
+        'Pragma' => 'no-cache',
+        'Expires' => 0,
+    ]);
 })
-->assert('userId', '\d+')
-->assert('actionId', '\w+')
-->assert('payload', '.+')
-->bind('track');
+->assert('userId', '[^/]+')
+->assert('actionId', '[^/]+')
+->assert('payload', '[^/]*')
+->bind('analyze');
 
 // error route
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {

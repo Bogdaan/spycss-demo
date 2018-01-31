@@ -1,0 +1,42 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<main role="main" class="inner cover">
+    <p class="lead">Last 10 interactions, from <a href="{{ url('home') }}">this page</a>, sent using CSS</p>
+
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Action</th>
+            <th>Payload</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+        <tr>
+            {% for idx in [0, 1, 2] %}
+                {% if event[idx] is defined %}
+                    <td>{{ event[idx] }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+        {% if events is empty %}
+        <tr>
+            <td colspan="3">no interactions</td>
+        </tr>
+        {% endif %}
+    </tbody>
+    </table>
+
+    <p class="lead">
+      <a href="{{ url('events') }}" class="btn btn-lg btn-secondary">Refresh</a>
+      <a href="{{ url('remove_events') }}" class="btn btn-lg">Delete all</a>
+    </p>
+
+</main>
+{% endblock %}

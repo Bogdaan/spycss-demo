@@ -3,12 +3,6 @@
     "description": "Demo for spycss",
     "license": "MIT",
     "type": "project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url" : "/home/bogdan/projects/spycss"
-        }
-    ],
     "require": {
         "php": ">=5.5.9",
         "silex/silex": "~2.0",

@@ -30,7 +30,7 @@ $app->get('/', function () use ($app, $spyCssBackendUrl) {
                     ->content('hcbogdan.com')
                     ->attribute('href', 'https://hcbogdan.com')
                     ->interactions([
-                        new \SpyCss\Interaction\Hover('hover-hcbogdan.com'),
+                        new \SpyCss\Interaction\Hover('hover_hcbogdan_com'),
                     ])
                     ->get()
                 .'</li>'
@@ -40,7 +40,7 @@ $app->get('/', function () use ($app, $spyCssBackendUrl) {
                     ->content('google.com')
                     ->attribute('href', 'https://www.google.com')
                     ->interactions([
-                        new \SpyCss\Interaction\Hover('hover-google.com'),
+                        new \SpyCss\Interaction\Hover('hover_google_com'),
                     ])
                     ->get()
                 .'</li>'
@@ -60,7 +60,7 @@ $app->get('/', function () use ($app, $spyCssBackendUrl) {
                         'target' => '_blank'
                     ])
                     ->interactions([
-                        new \SpyCss\Interaction\Active('click-github.com'),
+                        new \SpyCss\Interaction\Active('click_github_com'),
                     ])
                     ->get()
                 .'</li>'
@@ -73,7 +73,7 @@ $app->get('/', function () use ($app, $spyCssBackendUrl) {
                         'target' => '_blank'
                     ])
                     ->interactions([
-                        new \SpyCss\Interaction\Active('click-medium.com'),
+                        new \SpyCss\Interaction\Active('click_medium_com'),
                     ])
                     ->get()
                 .'</li>'
@@ -93,7 +93,7 @@ $app->get('/', function () use ($app, $spyCssBackendUrl) {
                         'target' => '_blank'
                     ])
                     ->interactions([
-                        new \SpyCss\Interaction\Online('view-on-hcbogdan.com'),
+                        new \SpyCss\Interaction\Online('view_on_hcbogdan_com'),
                     ])
                     ->get()
                 .'</li>'
@@ -106,7 +106,7 @@ $app->get('/', function () use ($app, $spyCssBackendUrl) {
                         'target' => '_blank'
                     ])
                     ->interactions([
-                        new \SpyCss\Interaction\Online('view-on-google.com'),
+                        new \SpyCss\Interaction\Online('view_on_google_com'),
                     ])
                     ->get()
                 .'</li>'
@@ -128,7 +128,7 @@ $app->get('/', function () use ($app, $spyCssBackendUrl) {
                         'placeholder' => 'Write some text',
                     ])
                     ->interactions([
-                        new \SpyCss\Interaction\Valid('you-fill-input'),
+                        new \SpyCss\Interaction\Valid('you_fill_input'),
                     ])
                     ->get()
                 .'</div>'
